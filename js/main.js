@@ -1,16 +1,22 @@
 let restaurants,
   neighborhoods,
   cuisines
-var newMap
-var markers = []
+var map
+var markers = [];
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
-  initMap(); // added 
-  fetchNeighborhoods();
-  fetchCuisines();
+ 
+  this.fetchNeighborhoods();
+  this.fetchCuisines();
 });
 
 /**
@@ -71,7 +77,7 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
 /**
  * Initialize leaflet map, called from HTML.
  */
-initMap = () => {
+/* initMap = () => {
   self.newMap = L.map('map', {
         center: [40.722216, -73.987501],
         zoom: 12,
@@ -87,8 +93,8 @@ initMap = () => {
   }).addTo(newMap);
 
   updateRestaurants();
-}
-/* window.initMap = () => {
+} */
+window.initMap = () => {
   let loc = {
     lat: 40.722216,
     lng: -73.987501
@@ -98,8 +104,8 @@ initMap = () => {
     center: loc,
     scrollwheel: false
   });
-  updateRestaurants();
-} */
+  this.updateRestaurants();
+}
 
 /**
  * Update page and map for current restaurants.
@@ -197,7 +203,7 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     self.markers.push(marker);
   });
 
-} 
+}
 /* addMarkersToMap = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     // Add marker to the map

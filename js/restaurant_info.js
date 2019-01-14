@@ -1,17 +1,17 @@
 let restaurant;
-var newMap;
+var map;
 
 /**
  * Initialize map as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {  
-  initMap();
+  DBHelper.startServiceWorker();
 });
 
 /**
  * Initialize leaflet map
  */
-initMap = () => {
+/* initMap = () => {
   fetchRestaurantFromURL((error, restaurant) => {
     if (error) { // Got an error!
       console.error(error);
@@ -33,10 +33,10 @@ initMap = () => {
       DBHelper.mapMarkerForRestaurant(self.restaurant, self.newMap);
     }
   });
-}  
+}  */
  
-/* window.initMap = () => {
-  fetchRestaurantFromURL((error, restaurant) => {
+window.initMap = () => {
+  this.fetchRestaurantFromURL((error, restaurant) => {
     if (error) { // Got an error!
       console.error(error);
     } else {
@@ -45,11 +45,11 @@ initMap = () => {
         center: restaurant.latlng,
         scrollwheel: false
       });
-      fillBreadcrumb();
+      this.fillBreadcrumb();
       DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
     }
   });
-} */
+}
 
 /**
  * Get current restaurant from page URL.
